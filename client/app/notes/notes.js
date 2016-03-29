@@ -23,9 +23,9 @@
 
     }
 
-    NotesController.$inject = [ "$scope" ];
-    function NotesController ( $scope ) {
-        $scope.message = "Hello!";
+    NotesController.$inject = [ "$state" ];
+    function NotesController ( $state ) {
+        $state.go( "notes.form" );
     }
 
 } )();
