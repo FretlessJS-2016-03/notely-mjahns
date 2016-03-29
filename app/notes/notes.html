@@ -1,1 +1,24 @@
-<h1>Notely</h1><p> {{ message }} </p><div ui-view></div>
+<div class = "container">
+   
+    <div class = "row" >
+  
+        <nav class = "col-xs-4" id = "sidebar" >
+            
+                <button class = "new-note btn btn-default" >
+                   New Note
+                </button> 
+
+                <ul id = "notes" >
+                    <li>Test Note 1</li>
+                    <li>Test Note 2</li>
+                </ul>
+                         
+        </nav>
+
+        <main class = "col-xs-8">
+            <div ui-view></div>
+        </main>
+
+    </div>
+
+</div>
