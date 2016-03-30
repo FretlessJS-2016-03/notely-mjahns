@@ -1,31 +1,28 @@
-( function () {
-    // set up the module
-    angular.module( "notely.notes", [ "ui.router" ] )
-        .config( notesConfig );
+(function() {
+  angular.module('notely.notes', [
+    'ui.router'
+  ])
+  .config(notesConfig);
 
-    // manually inject so that we can minify
-    notesConfig.$inject = [ "$stateProvider" ];
+  notesConfig.$inject = ['$stateProvider'];
+  function notesConfig($stateProvider) {
+    $stateProvider
 
-    
-    function notesConfig ( $stateProvider ) {
-       // set up the state
-       $stateProvider
-           .state( "notes", {        
-                url : "/notes", 
-                templateUrl : "/notes/notes.html", 
-                controller : NotesController    
-            })
+      .state('notes', {
+        url: '/notes',
+        templateUrl: '/notes/notes.html',
+        controller: NotesController
+      })
 
-            .state( "notes.form", {
-                url : "/:noteId",
-                templateUrl : "/notes/notes-form.html"
-            });
+      .state('notes.form', {
+        url: '/:noteId',
+        templateUrl: '/notes/notes-form.html'
+      });
+  }
 
-    }
-
-    NotesController.$inject = [ "$state" ];
-    function NotesController ( $state ) {
-        $state.go( "notes.form" );
-    }
-
-} )();
+  NotesController.$inject = [ "$scope", "$state", "NotesService" ];
+  function NotesController( $scope, $state, NotesService ) {
+    NotesService.fetch( function () { $scope.notes = NotesService.getNotes() } );
+    $state.go('notes.form');
+  }
+})();
