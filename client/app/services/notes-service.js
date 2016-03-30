@@ -16,16 +16,21 @@
         that.notes = [];
 
         // create the fetch method
-        this.fetch = function( callback ) {
+        that.fetch = function() {
           // on GET responses save note data
-          $http.get( "http://localhost:3030" )
-            .success( function( notesData ) {
-                // save the data
-                that.notes = notesData;
-                
-                // invoke the callback
-                callback(); 
-            });
+          return $http.get( "http://localhost:3030" )
+             .then(
+                // success
+                function ( response ) {
+                    console.log( "success" );
+                    that.notes = response.data;
+                },
+
+                // failure
+                function ( response ) {
+                   alert( "failure: " + response );
+                }
+            ); 
         };
 
         // returns the saved note data
@@ -33,4 +38,4 @@
             return that.notes;
         };
       }
-    }());
+}());
