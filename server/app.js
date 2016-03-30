@@ -14,11 +14,11 @@ notelyServerApp.get( "/", function ( req, res ) {
     // respond with json
     res.json( [
         {
-            title: "hardcoded note",
+            title: "new hardcoded note",
             body_html: "foo"
         },
         {
-            title: "another hardcoded note",
+            title: "another new hardcoded note",
             body_html: "bar"
         }
     ]);
