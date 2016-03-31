@@ -22,21 +22,21 @@
 
   NotesController.$inject = [ "$scope", "$state", "NotesService" ];
   function NotesController( $scope, $state, NotesService ) {
+      // we need to create $scope.note, so just set it equal to an empty object for now
+      $scope.note = {};
+
       // tell the notes service to fetch notes, then save what it got for us
       NotesService.fetch().then( function () { $scope.notes = NotesService.getNotes() } );
     
-      // TESTING
-      $scope.note = {
-          title: "static note",
-          body_html: "foo bar"
-      };
-       
       $scope.save = function () {
-          // send the note to the server
-          console.log( $scope.note.title );
+          NotesService.create( $scope.note );
       };
 
       $state.go( "notes.form" );
+
+      $scope.clearForm = function () {
+          $scope.note = {};
+      }
   }
   
 })();

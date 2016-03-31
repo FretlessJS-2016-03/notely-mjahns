@@ -18,7 +18,7 @@
         // create the fetch method
         that.fetch = function() {
           // on GET responses save note data
-          return $http.get( "http://localhost:3030" )
+          return $http.get( "http://localhost:3030/notes" )
              .then(
                 // success
                 function ( response ) {
@@ -32,6 +32,16 @@
                 }
             ); 
         };
+
+        that.create = function ( note ) {
+            return $http.post( "http://localhost:3030/notes", {
+                note: note
+            }).then( function ( response ) {
+                that.notes.push( response.data.note );
+            });
+        }
+        
+            
 
         // returns the saved note data
         that.getNotes = function () {
