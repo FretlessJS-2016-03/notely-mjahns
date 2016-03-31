@@ -14,8 +14,8 @@
         // create notes as an array so that, when the server has no notes to give, the client still
         // sees NotesService.notes as an empty array and not undefined
         that.notes = [];
-
-        // create the fetch method
+        
+        // fetch notes from the server
         that.fetch = function() {
           // on GET responses save note data
           return $http.get( "http://localhost:3030/notes" )
@@ -33,6 +33,7 @@
             ); 
         };
 
+        // creates a note on the server
         that.create = function ( note ) {
             return $http.post( "http://localhost:3030/notes", {
                 note: note
@@ -41,11 +42,27 @@
             });
         }
         
-            
+        // finds a note using the given id
+        that.findById = function ( noteId ) {
+            for ( var i = 0; i < that.notes.length; ++i ) {
+                // check the current id against the desired id
+                if ( that.notes[i]._id === noteId ) {
+                    // we found the note
+                    return that.notes[i];
+                }
+            }
+
+            // if we didn't find the note, return an empty note - we could also return
+            // null/undefined if we wanted to build in some error handling in case not
+            // finding a note should be considered more serious
+            return {};
+        } 
 
         // returns the saved note data
         that.getNotes = function () {
             return that.notes;
         };
+
+        
       }
 }());

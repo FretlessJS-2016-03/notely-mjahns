@@ -26,17 +26,20 @@
       $scope.note = {};
 
       // tell the notes service to fetch notes, then save what it got for us
-      NotesService.fetch().then( function () { $scope.notes = NotesService.getNotes() } );
+      NotesService.fetch().then( function () { 
+          $scope.notes = NotesService.getNotes();
+          $scope.note = NotesService.findById( $state.params.noteId );
+      });
     
       $scope.save = function () {
           NotesService.create( $scope.note );
       };
 
-      $state.go( "notes.form" );
-
       $scope.clearForm = function () {
           $scope.note = {};
       }
+    
+      //$state.go( "notes.form" );
   }
   
 })();
