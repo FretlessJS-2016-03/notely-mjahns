@@ -28,22 +28,20 @@
 
   NotesController.$inject = [ "$scope", "$state", "NotesService" ];
   function NotesController( $scope, $state, NotesService ) {
-      // we need to create $scope.note, so just set it equal to an empty object for now
-      $scope.note = {};
-
-      // get the notes from the server, then find the note we want
+      // get the notes from the server
       $scope.notes = NotesService.getNotes();
+      $state.go( "notes.form" );
+  }
+
+  NotesFormController.$inject = [ "$scope", "$state", "NotesService" ];
+  function NotesFormController( $scope, $state, NotesService ) {
+      // find the note we want
       $scope.note = NotesService.findById( $state.params.noteId );
-    
+
+      // saves the note
       $scope.save = function () {
           NotesService.create( $scope.note );
-      };
-
-      $scope.clearForm = function () {
-          $scope.note = {};
       }
-    
-      //$state.go( "notes.form" );
   }
   
 })();
