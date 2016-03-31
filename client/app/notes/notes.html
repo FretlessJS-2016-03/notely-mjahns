@@ -13,7 +13,11 @@
 
                 <ul id = "notes" >
 
-                    <li ng-repeat = "note in notes" > {{ note.title }} </li>
+                    <li ng-repeat = "note in notes" > 
+                        
+                        <a ui-sref = "notes.form( { noteId: note._id } )">{{ note.title }}</a>
+                    
+                    </li>
 
                 </ul>
                          

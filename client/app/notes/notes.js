@@ -11,12 +11,18 @@
       .state('notes', {
         url: '/notes',
         templateUrl: '/notes/notes.html',
-        controller: NotesController
+        controller: NotesController,
+        resolve: { 
+            notesLoaded: function( NotesService ) {
+               return NotesService.fetch(); 
+            }
+        }
       })
 
       .state('notes.form', {
         url: '/:noteId',
-        templateUrl: '/notes/notes-form.html'
+        templateUrl: '/notes/notes-form.html',
+        controller: NotesFormController
       });
   }
 
@@ -25,11 +31,9 @@
       // we need to create $scope.note, so just set it equal to an empty object for now
       $scope.note = {};
 
-      // tell the notes service to fetch notes, then save what it got for us
-      NotesService.fetch().then( function () { 
-          $scope.notes = NotesService.getNotes();
-          $scope.note = NotesService.findById( $state.params.noteId );
-      });
+      // get the notes from the server, then find the note we want
+      $scope.notes = NotesService.getNotes();
+      $scope.note = NotesService.findById( $state.params.noteId );
     
       $scope.save = function () {
           NotesService.create( $scope.note );
