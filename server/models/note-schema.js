@@ -6,7 +6,7 @@ var NoteSchema = db.Schema(
     { 
         title: String, 
         body_html: String, 
-        update_at: { type: Date, default: Date.now }
+        updated_at: { type: Date, default: Date.now }
     } 
 );
 
