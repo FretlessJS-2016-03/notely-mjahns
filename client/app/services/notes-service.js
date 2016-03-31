@@ -38,7 +38,7 @@
             return $http.post( "http://localhost:3030/notes", {
                 note: note
             }).then( function ( response ) {
-                that.notes.push( response.data.note );
+                that.notes.unshift( response.data.note );
             });
         }
         
@@ -57,6 +57,18 @@
             // finding a note should be considered more serious
             return {};
         } 
+
+        // updates an existing note
+        that.update = function( note ) {
+            return $http.put( "http://localhost:3030/notes/" + note._id, { 
+                title: note.title, 
+                body_html: note.body_html 
+            })
+            .then( function ( response ) {
+                that.findById( note._id ).title = note.title;
+                that.findById( note._id ).body_html = note.body_html;
+            });
+        }
 
         // returns the saved note data
         that.getNotes = function () {

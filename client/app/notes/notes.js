@@ -40,7 +40,14 @@
 
       // saves the note
       $scope.save = function () {
-          NotesService.create( $scope.note );
+          // check for a note id
+          if ( $scope.note._id ) {
+              NotesService.update( $scope.note );
+          }
+          else {
+              // create a new note
+              NotesService.create( $scope.note );
+          }
       }
   }
   

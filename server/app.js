@@ -17,6 +17,9 @@ notelyServerApp.use( function ( req, res, next ) {
     res.header( "Access-Control-Allow-Origin", "*" );
     res.header( "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization" );
 
+    // send a header allowing clints to send us put requests
+    res.header( "Access-Control-Allow-Methods", "PUT" );
+
     // now move on
     next(); 
 });
@@ -40,6 +43,19 @@ notelyServerApp.post( "/notes", function ( req, res ) {
            note: noteData
         });
     });
+});
+
+notelyServerApp.put( "/notes/:notesId", function ( req, res ) {
+    Note.findOne( { _id: req.params.noteId } ).then( function( note ) {
+        // set the title and body
+        note.title = req.body.note.title;
+        note.body_html = req.body.note.body_html;
+       
+        // save the note
+        note.save().then( function ( noteData ) {
+           res.json( { message: "Saved!", note: note } );
+        });
+    }); 
 });
 
 notelyServerApp.listen( 3030, function () {
