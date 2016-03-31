@@ -1,3 +1,5 @@
+require( "dotenv" ).load();
+
 // express stuff
 var express = require( "express" );
 var notelyServerApp = express();
